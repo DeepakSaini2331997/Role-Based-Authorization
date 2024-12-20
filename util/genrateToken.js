@@ -2,7 +2,8 @@ import jwt from "jsonwebtoken"
 import { jwtsecret } from "../config/env.js"
 
 const createToken = (req,res)=>{
-    const {id,name,role,department,accessLevel } = req
+    //console.log(req," my requesttttis")
+    const {id,name,role,department,accessLevel } = req.body
     const user ={
         id:id,
         name:name,
@@ -10,7 +11,8 @@ const createToken = (req,res)=>{
         department:department,
         accessLevel:accessLevel
     }
-    if(user){
+    //console.log(user, "my user record"); return false;
+    if(user.id && user.name && user.role){
         try{
             const token = jwt.sign(user,jwtsecret,{expiresIn:"1h"})
             res.status(200).json({
